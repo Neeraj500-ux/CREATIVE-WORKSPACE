@@ -150,6 +150,7 @@ async function createProfile(firebaseUser: FirebaseUser): Promise<User> {
   const profile = profileFromDocument(uid, firebaseUser.email, profileDoc.data());
   return {
     ...profile,
+    id: uid,
     name: profile.name === "Workspace member"
       ? firebaseUser.displayName?.trim() || firebaseUser.email?.split("@")[0] || "Workspace User"
       : profile.name,
@@ -540,8 +541,10 @@ export function Provider({ children }: { children: ReactNode }) {
     try {
       const currentUser = requireUser();
       const clean: ProfilePatch = {};
+      // These are the only profile fields a signed-in member may edit.
+      // Role, permissions, department and team ownership stay administrator-controlled.
       const allowedFields: Array<keyof ProfilePatch> = [
-        "name", "phone", "job_title", "department", "team_id", "location", "bio", "avatar_url",
+        "name", "phone", "job_title", "location", "bio",
       ];
       for (const field of allowedFields) {
         const value = patch[field];
@@ -557,11 +560,18 @@ export function Provider({ children }: { children: ReactNode }) {
         throw new Error("Your name must contain at least two characters.");
       }
 
-      if (Object.keys(clean).length && auth.currentUser) {
+      const firebaseUser = auth.currentUser;
+      if (firebaseUser && currentUser.id !== firebaseUser.uid) {
+        throw new Error("Your workspace profile is out of sync. Please sign in again.");
+      }
+
+      if (Object.keys(clean).length && firebaseUser) {
         await authPersistenceReady;
-        await updateDoc(doc(db, "users", currentUser.id), clean as never);
+        // Never use an email, generated document ID, or a local record ID here.
+        // Firestore profile path must always be users/<Firebase Authentication UID>.
+        await updateDoc(doc(db, "users", firebaseUser.uid.trim()), clean as never);
         if (typeof clean.name === "string" && clean.name !== currentUser.name) {
-          await updateAuthProfile(auth.currentUser, { displayName: clean.name });
+          await updateAuthProfile(firebaseUser, { displayName: clean.name });
         }
       }
 
