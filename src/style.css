@@ -913,3 +913,201 @@ tbody tr:hover { background: #f8fbff; }
   .director-space-item { min-width: 157px; }
   .director-result-count { display: block; margin: 5px 0 0; }
 }
+
+/* Final mobile-safe overrides */
+html,
+body,
+#root {
+  min-width: 320px;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+.ca-shell .main,
+.ca-shell .main > main,
+#workspace-content {
+  min-width: 0;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+/* AppShell owns the page offset. Prevent an Outlet page from adding it twice. */
+.ca-shell #workspace-content > main {
+  min-width: 0;
+  max-width: 100%;
+  padding-top: 0 !important;
+}
+
+/* Keep all profile form labels and controls full width and left aligned. */
+#workspace-content form label {
+  display: flex !important;
+  width: 100%;
+  max-width: none;
+  align-items: stretch !important;
+  text-align: left !important;
+}
+
+#workspace-content form label > input,
+#workspace-content form label > textarea,
+#workspace-content form label > select,
+#workspace-content form label > div {
+  width: 100% !important;
+  max-width: none !important;
+  min-width: 0;
+  text-align: left !important;
+}
+
+#workspace-content form label > .relative {
+  position: relative;
+  width: 100% !important;
+}
+
+#workspace-content form label > .relative > svg {
+  position: absolute;
+  z-index: 2;
+  left: 15px;
+  top: 50%;
+  pointer-events: none;
+  color: #94a3b8;
+  transform: translateY(-50%);
+}
+
+#workspace-content form label > .relative > input {
+  width: 100% !important;
+  max-width: none !important;
+  padding-left: 44px !important;
+  text-align: left !important;
+}
+
+/* Hero name must remain readable on the dark navy gradient. */
+.profile-hero-copy h2 {
+  color: #ffffff !important;
+}
+
+.profile-hero-copy p,
+.profile-hero-meta,
+.profile-hero-meta > span {
+  color: #d6edff !important;
+}
+
+@media (max-width: 920px) {
+  .ca-shell .main > main {
+    padding-top: 22px !important;
+  }
+
+  .workspace-header {
+    position: sticky;
+    top: 0;
+    z-index: 80 !important;
+  }
+}
+
+@media (max-width: 680px) {
+  .ca-shell .main > main {
+    padding-right: 14px !important;
+    padding-bottom: 30px !important;
+    padding-left: 14px !important;
+  }
+
+  .workspace-status {
+    width: 100%;
+    margin-bottom: 18px;
+    white-space: normal;
+  }
+
+  .profile-hero {
+    min-height: 0;
+    align-items: flex-start;
+    gap: 15px;
+    padding: 20px 17px !important;
+  }
+
+  .profile-avatar-wrap {
+    margin: 0 !important;
+    transform: none !important;
+  }
+
+  .profile-hero-copy {
+    min-width: 0;
+    flex: 1;
+  }
+
+  .profile-hero-copy h2 {
+    color: #ffffff !important;
+    font-size: 1.55rem;
+  }
+
+  .profile-hero-copy p {
+    overflow: visible;
+    white-space: normal;
+  }
+
+  .profile-hero-meta {
+    min-width: 0;
+  }
+
+  .profile-hero-meta > span {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .card {
+    width: 100%;
+    padding: 18px !important;
+    border-radius: 22px;
+  }
+
+  .form-grid {
+    width: 100%;
+    grid-template-columns: 1fr !important;
+  }
+
+  #workspace-content form label {
+    width: 100% !important;
+    align-items: stretch !important;
+  }
+
+  #workspace-content input,
+  #workspace-content textarea,
+  #workspace-content select {
+    width: 100% !important;
+    max-width: none !important;
+    min-width: 0 !important;
+    text-align: left !important;
+  }
+
+  .profile-form-foot {
+    align-items: stretch !important;
+    flex-direction: column !important;
+  }
+
+  .profile-form-foot .btn {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 380px) {
+  .ca-shell .main > main {
+    padding-right: 11px !important;
+    padding-left: 11px !important;
+  }
+
+  .profile-hero {
+    flex-direction: column;
+  }
+
+  .profile-avatar-wrap {
+    align-self: center;
+  }
+
+  .profile-hero-copy {
+    width: 100%;
+    text-align: center;
+  }
+
+  .profile-hero-meta {
+    justify-content: center;
+  }
+}
