@@ -58,7 +58,7 @@ function readableError(error: unknown): string {
 function GoogleMark() {
   return (
     <svg
-      className="google-mark"
+      className="h-5 w-5 shrink-0"
       viewBox="0 0 48 48"
       aria-hidden="true"
       focusable="false"
@@ -196,104 +196,145 @@ export default function Login() {
   };
 
   return (
-    <main className="auth-screen" aria-busy={checking}>
-      <div className="auth-orb auth-orb-one" aria-hidden="true" />
-      <div className="auth-orb auth-orb-two" aria-hidden="true" />
-      <div className="auth-grid" aria-hidden="true" />
+    <main
+      className="relative min-h-screen overflow-hidden bg-[#020617] text-white selection:bg-cyan-300/30"
+      aria-busy={checking}
+    >
+      <div
+        className="pointer-events-none absolute -left-40 top-[-180px] h-[420px] w-[420px] rounded-full bg-blue-600/25 blur-3xl"
+        aria-hidden="true"
+      />
 
-      <div className="auth-shell">
-        <section className="auth-story">
-          <div
-            className="auth-brand"
-            aria-label="creative-crew CREATIVE WORKSPACE"
-          >
-            <span className="auth-brand-icon" aria-hidden="true">
-              <Layers size={23} strokeWidth={2.1} />
+      <div
+        className="pointer-events-none absolute bottom-[-180px] right-[-100px] h-[420px] w-[420px] rounded-full bg-cyan-400/20 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div
+        className="pointer-events-none absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(255,255,255,0.045)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.045)_1px,transparent_1px)] [background-size:42px_42px]"
+        aria-hidden="true"
+      />
+
+      <div className="relative z-10 mx-auto grid min-h-screen w-full max-w-[1500px] grid-cols-1 lg:grid-cols-[minmax(0,1.08fr)_minmax(420px,0.92fr)]">
+        <section className="hidden min-h-screen flex-col justify-between px-8 py-8 lg:flex xl:px-16">
+          <div className="flex items-center gap-3">
+            <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl border border-cyan-200/30 bg-gradient-to-br from-cyan-300 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/20">
+              <Layers size={24} strokeWidth={2.2} />
             </span>
 
-            <div>
-              <strong>creative-crew</strong>
-              <small>CREATIVE WORKSPACE</small>
+            <div className="min-w-0">
+              <strong className="block text-lg font-black tracking-tight text-white">
+                creative-crew
+              </strong>
+              <small className="block text-[10px] font-bold tracking-[0.22em] text-cyan-100/65">
+                CREATIVE WORKSPACE
+              </small>
             </div>
           </div>
 
-          <div className="auth-story-copy">
-            <span className="auth-pill">
-              <Sparkles size={13} aria-hidden="true" />
-              PLAN · CREATE · GROW
-            </span>
+          <div className="max-w-2xl">
+            <div className="mb-6 inline-flex items-center gap-2 rounded-full border border-cyan-200/20 bg-white/10 px-4 py-2 text-xs font-bold tracking-[0.16em] text-cyan-100 backdrop-blur-xl">
+              <Sparkles size={14} />
+              <span>PLAN · CREATE · GROW</span>
+            </div>
 
-            <h1>
-              Where great work finds its <em>flow.</em>
+            <h1 className="text-5xl font-black leading-[1.02] tracking-[-0.055em] text-white xl:text-7xl">
+              Where great work finds its{" "}
+              <em className="bg-gradient-to-r from-cyan-300 via-sky-300 to-blue-400 bg-clip-text not-italic text-transparent">
+                flow.
+              </em>
             </h1>
 
-            <p>
+            <p className="mt-7 max-w-xl text-lg leading-8 text-slate-300">
               Bring people, projects and progress together in one calm,
               focused workspace built for creative teams.
             </p>
 
-            <div className="auth-benefits">
-              <span>
-                <Check size={15} aria-hidden="true" />
-                Clear priorities
-              </span>
-
-              <span>
-                <Check size={15} aria-hidden="true" />
-                Better teamwork
-              </span>
-
-              <span>
-                <Check size={15} aria-hidden="true" />
-                Meaningful progress
-              </span>
+            <div className="mt-8 flex flex-wrap gap-3">
+              {[
+                "Clear priorities",
+                "Better teamwork",
+                "Meaningful progress",
+              ].map((item) => (
+                <span
+                  key={item}
+                  className="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.07] px-4 py-2.5 text-sm font-semibold text-slate-200"
+                >
+                  <Check size={15} className="text-cyan-300" />
+                  <span>{item}</span>
+                </span>
+              ))}
             </div>
           </div>
 
-          <div className="auth-story-bottom">
-            <span className="auth-mini-stat">
-              <Users size={16} aria-hidden="true" />
+          <div className="flex flex-wrap gap-8 text-sm text-slate-300">
+            <span className="inline-flex items-center gap-2">
+              <Users size={17} className="text-cyan-300" />
               <strong>One connected team</strong>
             </span>
 
-            <span className="auth-mini-stat">
-              <BarChart3 size={16} aria-hidden="true" />
+            <span className="inline-flex items-center gap-2">
+              <BarChart3 size={17} className="text-cyan-300" />
               <strong>Work with direction</strong>
             </span>
           </div>
         </section>
 
-        <section className="auth-panel" aria-labelledby="login-title">
-          <div className="auth-secure">
-            <ShieldCheck size={16} aria-hidden="true" />
-            <span>Secure Firebase workspace access</span>
-          </div>
+        <section className="flex min-h-screen items-center justify-center border-white/10 bg-slate-950/60 px-4 py-7 backdrop-blur-2xl sm:px-7 sm:py-10 lg:border-l lg:px-12">
+          <div className="w-full max-w-[520px]">
+            <div className="mb-8 flex items-center gap-3 lg:hidden">
+              <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-2xl bg-gradient-to-br from-cyan-300 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/20">
+                <Layers size={22} />
+              </span>
 
-          <div className="auth-form-wrap">
-            <div className="auth-welcome-icon" aria-hidden="true">
-              <Layers size={27} strokeWidth={2.1} />
+              <div>
+                <strong className="block text-base font-black text-white">
+                  creative-crew
+                </strong>
+                <small className="block text-[9px] font-bold tracking-[0.18em] text-cyan-100/65">
+                  CREATIVE WORKSPACE
+                </small>
+              </div>
             </div>
 
-            <span className="auth-eyebrow">WELCOME BACK</span>
+            <div className="mb-7 inline-flex max-w-full items-center justify-center gap-2 rounded-full border border-cyan-200/20 bg-cyan-300/[0.08] px-3.5 py-2 text-center text-[11px] font-semibold leading-4 text-cyan-100">
+              <ShieldCheck size={16} className="shrink-0 text-cyan-300" />
+              <span>Secure Firebase workspace access</span>
+            </div>
 
-            <h2 id="login-title">
-              Let&apos;s get creating<span>.</span>
-            </h2>
+            <div className="mb-7">
+              <div className="mb-5 flex h-14 w-14 items-center justify-center rounded-2xl border border-cyan-200/20 bg-gradient-to-br from-cyan-300/25 to-blue-600/30 text-cyan-200 shadow-xl shadow-cyan-950/30">
+                <Layers size={28} strokeWidth={2} />
+              </div>
 
-            <p className="auth-description">
-              Sign in to continue to your role-based workspace.
-            </p>
+              <span className="text-xs font-black tracking-[0.24em] text-cyan-300">
+                WELCOME BACK
+              </span>
+
+              <h2 className="mt-3 text-4xl font-black tracking-[-0.045em] text-white sm:text-5xl">
+                Let&apos;s get creating
+                <span className="text-cyan-300">.</span>
+              </h2>
+
+              <p className="mt-3 text-sm leading-6 text-slate-400 sm:text-base">
+                Sign in to continue to your role-based workspace.
+              </p>
+            </div>
 
             {checking && (
-              <div className="auth-status" role="status" aria-live="polite">
-                <LoaderCircle size={17} className="spin" aria-hidden="true" />
-                Preparing your workspace…
+              <div
+                className="mb-5 flex items-center gap-2 rounded-2xl border border-blue-300/20 bg-blue-400/10 px-4 py-3 text-sm text-blue-100"
+                role="status"
+                aria-live="polite"
+              >
+                <LoaderCircle size={17} className="shrink-0 animate-spin" />
+                <span>Preparing your workspace…</span>
               </div>
             )}
 
             {visibleError && (
               <div
-                className="auth-message auth-error"
+                className="mb-5 rounded-2xl border border-rose-300/25 bg-rose-400/10 px-4 py-3 text-sm leading-6 text-rose-100"
                 role="alert"
                 aria-live="assertive"
               >
@@ -303,7 +344,7 @@ export default function Login() {
 
             {success && (
               <div
-                className="auth-message auth-success"
+                className="mb-5 rounded-2xl border border-emerald-300/25 bg-emerald-400/10 px-4 py-3 text-sm leading-6 text-emerald-100"
                 role="status"
                 aria-live="polite"
               >
@@ -312,142 +353,183 @@ export default function Login() {
             )}
 
             <button
-              className="google-button"
+              className="group flex min-h-14 w-full items-center justify-center gap-3 rounded-2xl border border-white/15 bg-white/[0.08] px-4 text-sm font-bold text-white shadow-lg shadow-black/10 transition hover:border-cyan-300/40 hover:bg-white/[0.14] disabled:cursor-not-allowed disabled:opacity-55"
               type="button"
               onClick={() => void handleGoogle()}
               disabled={disabled}
             >
-              <span aria-hidden="true">
+              <span className="flex shrink-0 items-center justify-center">
                 {busy === "google" ? (
-                  <LoaderCircle size={19} className="spin" />
+                  <LoaderCircle size={20} className="animate-spin text-cyan-300" />
                 ) : (
                   <GoogleMark />
                 )}
               </span>
 
-              {busy === "google"
-                ? "Connecting to Google…"
-                : "Continue with Google"}
+              <span>
+                {busy === "google"
+                  ? "Connecting to Google…"
+                  : "Continue with Google"}
+              </span>
             </button>
 
-            <div className="auth-divider">
-              <span>or continue with email</span>
+            <div className="my-7 flex items-center gap-3 text-[10px] font-bold uppercase tracking-[0.13em] text-slate-500 sm:gap-4 sm:text-xs">
+              <span className="h-px flex-1 bg-white/10" />
+              <span className="whitespace-nowrap">or continue with email</span>
+              <span className="h-px flex-1 bg-white/10" />
             </div>
 
-            <form className="auth-form" onSubmit={handleSubmit} noValidate>
-              <label htmlFor="login-email">Work email</label>
+            <form
+              className="space-y-5"
+              onSubmit={handleSubmit}
+              noValidate
+            >
+              <div className="space-y-2">
+                <label
+                  htmlFor="login-email"
+                  className="flex items-center gap-2 text-sm font-bold text-slate-200"
+                >
+                  <Mail size={16} className="shrink-0 text-cyan-300" />
+                  <span>Work email</span>
+                </label>
 
-              <div className="auth-input">
-                <Mail size={18} aria-hidden="true" />
+                <div className="relative w-full">
+                  <Mail
+                    size={19}
+                    className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-slate-500"
+                    aria-hidden="true"
+                  />
 
-                <input
-                  ref={emailInputRef}
-                  id="login-email"
-                  name="email"
-                  type="email"
-                  autoComplete="username"
-                  autoCapitalize="none"
-                  autoCorrect="off"
-                  spellCheck={false}
-                  inputMode="email"
-                  placeholder="you@company.com"
-                  value={email}
-                  onChange={(event) => {
-                    setEmail(event.target.value);
-                    clearMessages();
-                  }}
-                  disabled={disabled}
-                  required
-                />
+                  <input
+                    ref={emailInputRef}
+                    id="login-email"
+                    name="email"
+                    type="email"
+                    autoComplete="username"
+                    autoCapitalize="none"
+                    autoCorrect="off"
+                    spellCheck={false}
+                    inputMode="email"
+                    placeholder="you@company.com"
+                    value={email}
+                    onChange={(event) => {
+                      setEmail(event.target.value);
+                      clearMessages();
+                    }}
+                    disabled={disabled}
+                    required
+                    className="h-14 w-full min-w-0 rounded-2xl border border-white/12 bg-white/[0.07] pl-12 pr-4 text-sm font-semibold text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/70 focus:bg-white/[0.11] focus:ring-4 focus:ring-cyan-300/10 disabled:cursor-not-allowed disabled:opacity-60"
+                  />
+                </div>
               </div>
 
-              <div className="auth-password-label">
-                <label htmlFor="login-password">Password</label>
+              <div className="space-y-2">
+                <div className="flex items-center justify-between gap-3">
+                  <label
+                    htmlFor="login-password"
+                    className="flex items-center gap-2 text-sm font-bold text-slate-200"
+                  >
+                    <LockKeyhole size={16} className="shrink-0 text-cyan-300" />
+                    <span>Password</span>
+                  </label>
 
-                <button
-                  type="button"
-                  onClick={() => void handleReset()}
-                  disabled={disabled}
-                >
-                  {busy === "reset" ? "Sending…" : "Forgot password?"}
-                </button>
-              </div>
+                  <button
+                    type="button"
+                    onClick={() => void handleReset()}
+                    disabled={disabled}
+                    className="shrink-0 text-xs font-bold text-cyan-300 transition hover:text-cyan-200 disabled:cursor-not-allowed disabled:opacity-50"
+                  >
+                    {busy === "reset" ? "Sending…" : "Forgot password?"}
+                  </button>
+                </div>
 
-              <div className="auth-input">
-                <LockKeyhole size={18} aria-hidden="true" />
+                <div className="relative w-full">
+                  <LockKeyhole
+                    size={19}
+                    className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-slate-500"
+                    aria-hidden="true"
+                  />
 
-                <input
-                  id="login-password"
-                  name="password"
-                  type={showPassword ? "text" : "password"}
-                  autoComplete="current-password"
-                  placeholder="Enter your password"
-                  value={password}
-                  onChange={(event) => {
-                    setPassword(event.target.value);
-                    clearMessages();
-                  }}
-                  disabled={disabled}
-                  required
-                />
+                  <input
+                    id="login-password"
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="current-password"
+                    placeholder="Enter your password"
+                    value={password}
+                    onChange={(event) => {
+                      setPassword(event.target.value);
+                      clearMessages();
+                    }}
+                    disabled={disabled}
+                    required
+                    className="h-14 w-full min-w-0 rounded-2xl border border-white/12 bg-white/[0.07] pl-12 pr-14 text-sm font-semibold text-white outline-none transition placeholder:text-slate-500 focus:border-cyan-300/70 focus:bg-white/[0.11] focus:ring-4 focus:ring-cyan-300/10 disabled:cursor-not-allowed disabled:opacity-60"
+                  />
 
-                <button
-                  className="password-toggle"
-                  type="button"
-                  onClick={() => setShowPassword((value) => !value)}
-                  disabled={disabled}
-                  aria-label={
-                    showPassword ? "Hide password" : "Show password"
-                  }
-                  aria-pressed={showPassword}
-                >
-                  {showPassword ? (
-                    <EyeOff size={18} aria-hidden="true" />
-                  ) : (
-                    <Eye size={18} aria-hidden="true" />
-                  )}
-                </button>
+                  <button
+                    className="absolute right-2 top-1/2 flex h-10 w-10 -translate-y-1/2 items-center justify-center rounded-xl text-slate-400 transition hover:bg-white/10 hover:text-white disabled:cursor-not-allowed disabled:opacity-50"
+                    type="button"
+                    onClick={() => setShowPassword((value) => !value)}
+                    disabled={disabled}
+                    aria-label={
+                      showPassword ? "Hide password" : "Show password"
+                    }
+                    aria-pressed={showPassword}
+                  >
+                    {showPassword ? (
+                      <EyeOff size={18} />
+                    ) : (
+                      <Eye size={18} />
+                    )}
+                  </button>
+                </div>
               </div>
 
               <button
-                className="auth-submit"
+                className="group flex min-h-14 w-full items-center gap-3 rounded-2xl bg-gradient-to-r from-blue-600 via-sky-500 to-cyan-400 px-5 text-sm font-black text-white shadow-xl shadow-cyan-950/30 transition hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60"
                 type="submit"
                 disabled={disabled}
               >
-                <span>
+                <span className="flex flex-1 items-center justify-center gap-2">
                   {(busy === "email" || checking) && (
-                    <LoaderCircle
-                      size={17}
-                      className="spin"
-                      aria-hidden="true"
-                    />
+                    <LoaderCircle size={18} className="animate-spin" />
                   )}
 
-                  {checking
-                    ? "Preparing workspace…"
-                    : busy === "email"
-                      ? "Signing in…"
-                      : "Enter your workspace"}
+                  <span>
+                    {checking
+                      ? "Preparing workspace…"
+                      : busy === "email"
+                        ? "Signing in…"
+                        : "Enter your workspace"}
+                  </span>
                 </span>
 
-                <ArrowRight size={18} aria-hidden="true" />
+                <ArrowRight
+                  size={19}
+                  className="shrink-0 transition-transform group-hover:translate-x-1"
+                />
               </button>
             </form>
 
-            <p className="auth-trust">
-              <ShieldCheck size={14} aria-hidden="true" />
-              Your identity is protected by Firebase Authentication.
-            </p>
+            <div className="mt-7 space-y-3 text-center">
+              <p className="flex items-center justify-center gap-2 text-xs leading-5 text-slate-400">
+                <ShieldCheck size={15} className="shrink-0 text-cyan-300" />
+                <span>
+                  Your identity is protected by Firebase Authentication.
+                </span>
+              </p>
 
-            <p className="auth-help">
-              Need an account? Contact your workspace administrator.
-            </p>
+              <p className="text-xs leading-5 text-slate-500">
+                Need an account? Contact your workspace administrator.
+              </p>
+            </div>
+
+            <footer className="mt-10 border-t border-white/10 pt-5 text-center text-xs text-slate-500">
+              © {new Date().getFullYear()} creative-crew
+              <span className="mx-2 text-slate-700">·</span>
+              <span>Built for focused teams.</span>
+            </footer>
           </div>
-
-          <footer className="auth-footer">
-            © {new Date().getFullYear()} creative-crew{" "}
-            <span>Built for focused teams.</span>
-          </footer>
         </section>
       </div>
     </main>
