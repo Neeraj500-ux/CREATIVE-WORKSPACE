@@ -67,22 +67,16 @@ const preferenceOptions: Array<
 ];
 
 const cardClass =
-  "min-w-0 rounded-[22px] border border-slate-200/80 bg-white/90 p-4 shadow-[0_20px_60px_-30px_rgba(15,55,110,0.35)] backdrop-blur-xl sm:rounded-[26px] sm:p-6";
+  "rounded-[26px] border border-slate-200/80 bg-white/85 p-5 shadow-[0_20px_60px_-30px_rgba(15,55,110,0.35)] backdrop-blur-xl sm:p-6";
 
-// NOTE: horizontal padding is intentionally split (no shared `px-4`) so that
-// the icon-field variant can safely add left clearance with `pl-11` without
-// a Tailwind cascade-order clash against a competing `px-4` utility.
-const inputBaseClass =
-  "block h-12 !w-full min-w-0 rounded-2xl border border-slate-200 bg-white py-2.5 pr-4 text-left text-[15px] font-medium text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-cyan-300 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 disabled:cursor-not-allowed disabled:opacity-60";
-
-const inputPlainClass = `${inputBaseClass} pl-4`;
-const inputIconClass = `${inputBaseClass} pl-11`;
+const inputClass =
+  "!block !h-12 !w-full !max-w-none !min-w-0 !rounded-2xl !border border-slate-200 bg-white/80 px-4 !text-left text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-cyan-300 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10 disabled:cursor-not-allowed disabled:opacity-60";
 
 const textareaClass =
-  "block min-h-[110px] !w-full min-w-0 resize-none rounded-2xl border border-slate-200 bg-white px-4 py-3 text-left text-[15px] font-medium text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-cyan-300 focus:border-cyan-500 focus:ring-4 focus:ring-cyan-500/10 disabled:cursor-not-allowed disabled:opacity-60";
+  "!block !w-full !max-w-none !min-w-0 resize-none rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 !text-left text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-cyan-300 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10 disabled:cursor-not-allowed disabled:opacity-60";
 
 const labelClass =
-  "flex min-w-0 flex-col gap-2 text-left text-[13px] font-bold text-slate-700";
+  "flex !w-full !max-w-none !items-stretch flex-col gap-2 !text-left text-[13px] font-semibold text-slate-700";
 
 export default function Profile() {
   const { user, updateProfile } = useWorkspace();
@@ -168,8 +162,8 @@ export default function Profile() {
     }
 
     setSaving(true);
-    setError("");
     setMessage("");
+    setError("");
 
     const cleanForm = {
       ...form,
@@ -207,42 +201,43 @@ export default function Profile() {
 
   return (
     <main
-      className="relative isolate min-h-full min-w-0 overflow-x-hidden bg-[#f4f8ff] px-3 pb-28 pt-[max(7.5rem,env(safe-area-inset-top)+5.5rem)] sm:px-5 sm:pt-32 md:pb-10 md:pt-8 lg:px-8"
+      className="relative isolate min-h-full min-w-0 overflow-x-hidden bg-[#f4f8ff] px-3 pb-24 pt-[132px] sm:px-5 md:pb-10 md:pt-8 lg:px-8"
       aria-busy={saving}
     >
-      <div className="pointer-events-none absolute -left-24 top-20 h-64 w-64 rounded-full bg-cyan-300/20 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 top-80 h-72 w-72 rounded-full bg-blue-400/15 blur-3xl" />
+      <div className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-cyan-300/20 blur-3xl" />
+      <div className="pointer-events-none absolute -right-24 top-72 h-72 w-72 rounded-full bg-blue-400/15 blur-3xl" />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl">
-        <header className="mb-5 flex min-w-0 flex-col gap-3 md:flex-row md:items-end md:justify-between md:gap-4">
+        <header className="mb-5 flex min-w-0 flex-col gap-4 md:flex-row md:items-end md:justify-between">
           <div className="min-w-0">
-            <span className="inline-flex items-center gap-2 text-[10px] font-black tracking-[0.2em] text-cyan-700 sm:text-[11px]">
-              <UserRound size={14} className="shrink-0" />
-              <span className="truncate">YOUR WORKSPACE IDENTITY</span>
+            <span className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-cyan-700">
+              <UserRound size={14} />
+              YOUR WORKSPACE IDENTITY
             </span>
 
-            <h1 className="mt-2 break-words text-[clamp(1.65rem,7vw,3rem)] font-black leading-[1.08] tracking-[-0.04em] text-[#071a3d]">
+            <h1 className="mt-2 break-words text-[clamp(2rem,8vw,3rem)] font-black leading-[1.05] tracking-[-0.05em] text-[#071a3d]">
               Profile & preferences
             </h1>
 
-            <p className="mt-2 max-w-xl text-[13px] leading-6 text-slate-500 sm:text-sm">
+            <p className="mt-2 max-w-xl text-sm text-slate-500">
               Keep your details current so the right work reaches the right
               person.
             </p>
           </div>
 
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-white/90 px-4 py-2 text-xs font-bold text-emerald-700 shadow-sm">
-            <span className="h-2 w-2 shrink-0 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(52,211,153,0.15)]" />
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-xs font-bold text-emerald-700 shadow-sm">
+            <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(52,211,153,0.15)]" />
             Active account
           </div>
         </header>
 
-        <section className="relative mb-5 min-w-0 overflow-hidden rounded-[22px] border border-white/20 bg-gradient-to-br from-[#07183f] via-[#0b2e5e] to-[#07566a] px-4 py-5 text-white shadow-[0_24px_70px_-30px_rgba(5,38,91,0.65)] sm:rounded-[26px] sm:px-7 sm:py-6">
-          <div className="pointer-events-none absolute -right-12 -top-16 h-48 w-48 rounded-full border border-cyan-200/20 bg-cyan-300/10 blur-sm" />
+        <section className="relative mb-5 overflow-hidden rounded-[28px] border border-white/20 bg-gradient-to-br from-[#07183f] via-[#0b2e5e] to-[#07566a] px-5 py-5 text-white shadow-[0_24px_70px_-30px_rgba(5,38,91,0.65)] sm:px-7 sm:py-6">
+          <div className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full border border-cyan-200/20 bg-cyan-300/10 blur-sm" />
+          <div className="pointer-events-none absolute bottom-[-90px] right-28 h-52 w-52 rounded-full bg-cyan-300/10 blur-3xl" />
 
-          <div className="relative z-10 flex min-w-0 items-center gap-3 sm:gap-5">
-            <div className="relative grid h-14 w-14 shrink-0 place-items-center rounded-[18px] bg-gradient-to-br from-cyan-300 via-emerald-300 to-blue-500 p-1 shadow-[0_12px_30px_rgba(34,211,238,0.3)] sm:h-[70px] sm:w-[70px] sm:rounded-[21px]">
-              <div className="grid h-full w-full place-items-center overflow-hidden rounded-[14px] bg-[#0b2855] sm:rounded-[17px]">
+          <div className="relative z-10 flex min-w-0 flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
+            <div className="relative grid h-[70px] w-[70px] shrink-0 place-items-center rounded-[23px] bg-gradient-to-br from-cyan-300 via-emerald-300 to-blue-500 p-1 shadow-[0_12px_30px_rgba(34,211,238,0.3)]">
+              <div className="grid h-full w-full place-items-center overflow-hidden rounded-[19px] bg-[#0b2855]">
                 <Avatar name={user.name} role={user.role} />
               </div>
 
@@ -255,48 +250,48 @@ export default function Profile() {
             </div>
 
             <div className="min-w-0 flex-1">
-              <span className="block truncate text-[9px] font-black tracking-[0.18em] text-cyan-200 sm:text-[10px] sm:tracking-[0.2em]">
+              <span className="text-[10px] font-black tracking-[0.2em] text-cyan-200">
                 {roleName.toUpperCase()} ACCESS
               </span>
 
-              <h2 className="mt-1 truncate text-lg font-bold tracking-[-0.03em] sm:text-3xl sm:tracking-[-0.04em]">
+              <h2 className="mt-1 truncate text-2xl font-bold tracking-[-0.04em] sm:text-3xl">
                 {user.name}
               </h2>
 
-              <p className="mt-1 max-w-xl truncate text-[11px] text-blue-100/80 sm:text-xs">
+              <p className="mt-1 max-w-xl truncate text-xs text-blue-100/80">
                 {roleDescription}
               </p>
 
-              <div className="mt-2 flex min-w-0 flex-wrap items-center gap-2 sm:mt-3">
-                <span className="rounded-full border border-cyan-200/30 bg-white/10 px-3 py-1 text-[10px] font-bold text-cyan-50 backdrop-blur sm:text-[11px]">
+              <div className="mt-3 flex min-w-0 flex-wrap items-center gap-2">
+                <span className="rounded-full border border-cyan-200/30 bg-white/10 px-3 py-1 text-[11px] font-bold text-cyan-50 backdrop-blur">
                   {roleName}
                 </span>
 
-                <span className="max-w-[160px] truncate text-[10px] text-blue-100/80 sm:max-w-[300px] sm:text-[11px]">
+                <span className="max-w-full truncate text-[11px] text-blue-100/80">
                   {user.email}
                 </span>
               </div>
             </div>
 
-            <div className="hidden shrink-0 text-cyan-200/30 md:block">
+            <div className="hidden shrink-0 text-cyan-200/30 sm:block">
               <ShieldCheck size={64} strokeWidth={1} />
             </div>
           </div>
         </section>
 
-        <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)]">
+        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)]">
           <form
             className={cardClass}
             onSubmit={submit}
             noValidate
           >
-            <div className="mb-5 flex items-start justify-between gap-4 sm:mb-6">
-              <div className="min-w-0">
-                <span className="text-[10px] font-black tracking-[0.2em] text-cyan-700 sm:text-[11px]">
+            <div className="mb-6 flex items-start justify-between gap-4">
+              <div>
+                <span className="text-[11px] font-black tracking-[0.2em] text-cyan-700">
                   PERSONAL DETAILS
                 </span>
 
-                <h3 className="mt-1 text-xl font-bold tracking-[-0.03em] text-[#071a3d] sm:text-2xl sm:tracking-[-0.04em]">
+                <h3 className="mt-1 text-2xl font-bold tracking-[-0.04em] text-[#071a3d]">
                   About you
                 </h3>
               </div>
@@ -306,14 +301,14 @@ export default function Profile() {
               </span>
             </div>
 
-            <div className="grid min-w-0 grid-cols-1 gap-4 sm:grid-cols-2">
+            <div className="grid gap-4 md:grid-cols-2">
               <label className={labelClass} htmlFor="profile-name">
                 <span>Full name</span>
 
-                <div className="relative min-w-0">
+                <div className="relative w-full min-w-0">
                   <UserRound
                     size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-slate-400"
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
                   />
 
                   <input
@@ -326,7 +321,7 @@ export default function Profile() {
                     maxLength={80}
                     required
                     disabled={saving}
-                    className={inputIconClass}
+                    className={`${inputClass} pl-11`}
                   />
                 </div>
               </label>
@@ -334,10 +329,10 @@ export default function Profile() {
               <label className={labelClass} htmlFor="profile-email">
                 <span>Work email</span>
 
-                <div className="relative min-w-0">
+                <div className="relative w-full min-w-0">
                   <Mail
                     size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-slate-400"
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
                   />
 
                   <input
@@ -346,7 +341,7 @@ export default function Profile() {
                     value={user.email}
                     readOnly
                     autoComplete="email"
-                    className={`${inputIconClass} bg-slate-100/90 text-slate-500`}
+                    className={`${inputClass} bg-slate-100/80 pl-11 text-slate-500`}
                   />
                 </div>
               </label>
@@ -354,10 +349,10 @@ export default function Profile() {
               <label className={labelClass} htmlFor="profile-phone">
                 <span>Phone number</span>
 
-                <div className="relative min-w-0">
+                <div className="relative w-full min-w-0">
                   <Phone
                     size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-slate-400"
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
                   />
 
                   <input
@@ -370,7 +365,7 @@ export default function Profile() {
                     autoComplete="tel"
                     maxLength={20}
                     disabled={saving}
-                    className={inputIconClass}
+                    className={`${inputClass} pl-11`}
                   />
                 </div>
               </label>
@@ -378,10 +373,10 @@ export default function Profile() {
               <label className={labelClass} htmlFor="profile-job-title">
                 <span>Job title</span>
 
-                <div className="relative min-w-0">
+                <div className="relative w-full min-w-0">
                   <BriefcaseBusiness
                     size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-slate-400"
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
                   />
 
                   <input
@@ -393,7 +388,7 @@ export default function Profile() {
                     autoComplete="organization-title"
                     maxLength={80}
                     disabled={saving}
-                    className={inputIconClass}
+                    className={`${inputClass} pl-11`}
                   />
                 </div>
               </label>
@@ -405,17 +400,17 @@ export default function Profile() {
                   id="profile-department"
                   value={user.department || user.team_id || "Not assigned"}
                   readOnly
-                  className={`${inputPlainClass} bg-slate-100/90 text-slate-500`}
+                  className={`${inputClass} bg-slate-100/80 text-slate-500`}
                 />
               </label>
 
               <label className={labelClass} htmlFor="profile-location">
                 <span>Location</span>
 
-                <div className="relative min-w-0">
+                <div className="relative w-full min-w-0">
                   <MapPin
                     size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 z-10 -translate-y-1/2 text-slate-400"
+                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
                   />
 
                   <input
@@ -427,7 +422,7 @@ export default function Profile() {
                     autoComplete="address-level2"
                     maxLength={100}
                     disabled={saving}
-                    className={inputIconClass}
+                    className={`${inputClass} pl-11`}
                   />
                 </div>
               </label>
@@ -465,7 +460,7 @@ export default function Profile() {
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex h-12 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#0756a5] to-[#0796b4] px-5 text-sm font-bold text-white shadow-[0_12px_24px_-10px_rgba(7,116,180,0.8)] transition hover:-translate-y-0.5 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:translate-y-0 sm:w-auto"
+                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#0756a5] to-[#0796b4] px-5 text-sm font-bold text-white shadow-[0_12px_24px_-10px_rgba(7,116,180,0.8)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-10px_rgba(7,116,180,0.8)] disabled:cursor-not-allowed disabled:opacity-60"
               >
                 <Save size={16} />
                 {saving ? "Saving…" : "Save changes"}
@@ -491,15 +486,15 @@ export default function Profile() {
             )}
           </form>
 
-          <aside className="min-w-0 space-y-5">
+          <aside className="space-y-5">
             <section className={cardClass}>
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-[10px] font-black tracking-[0.2em] text-cyan-700 sm:text-[11px]">
+                  <span className="text-[11px] font-black tracking-[0.2em] text-cyan-700">
                     ACCOUNT DETAILS
                   </span>
 
-                  <h3 className="mt-1 text-xl font-bold tracking-[-0.03em] text-[#071a3d] sm:text-2xl sm:tracking-[-0.04em]">
+                  <h3 className="mt-1 text-2xl font-bold tracking-[-0.04em] text-[#071a3d]">
                     Your access
                   </h3>
                 </div>
@@ -517,11 +512,11 @@ export default function Profile() {
                   </dd>
                 </div>
 
-                <div className="flex items-start justify-between gap-4 py-3">
+                <div className="flex items-center justify-between gap-4 py-3">
                   <dt className="text-sm text-slate-500">
                     Reporting line
                   </dt>
-                  <dd className="max-w-[62%] break-words text-right text-sm font-bold text-slate-800">
+                  <dd className="max-w-[170px] truncate text-right text-sm font-bold text-slate-800">
                     {user.reports_to || "Workspace leadership"}
                   </dd>
                 </div>
@@ -546,11 +541,11 @@ export default function Profile() {
             <section className={cardClass}>
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
-                  <span className="text-[10px] font-black tracking-[0.2em] text-cyan-700 sm:text-[11px]">
+                  <span className="text-[11px] font-black tracking-[0.2em] text-cyan-700">
                     NOTIFICATIONS
                   </span>
 
-                  <h3 className="mt-1 text-xl font-bold tracking-[-0.03em] text-[#071a3d] sm:text-2xl sm:tracking-[-0.04em]">
+                  <h3 className="mt-1 text-2xl font-bold tracking-[-0.04em] text-[#071a3d]">
                     Stay in the loop
                   </h3>
                 </div>
@@ -568,17 +563,14 @@ export default function Profile() {
                 {preferenceOptions.map(([key, label, note]) => (
                   <label
                     key={key}
-                    className={`flex min-w-0 items-center justify-between gap-4 py-4 first:pt-0 last:pb-0 ${
-                      saving
-                        ? "cursor-not-allowed opacity-60"
-                        : "cursor-pointer"
+                    className={`flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0 ${
+                      saving ? "cursor-not-allowed opacity-60" : "cursor-pointer"
                     }`}
                   >
                     <span className="min-w-0">
                       <strong className="block text-sm text-slate-800">
                         {label}
                       </strong>
-
                       <small className="mt-1 block text-xs leading-5 text-slate-500">
                         {note}
                       </small>
