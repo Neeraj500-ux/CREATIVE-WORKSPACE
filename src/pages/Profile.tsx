@@ -3,8 +3,10 @@ import {
   useState,
   type ChangeEvent,
   type FormEvent,
+  type ReactNode,
 } from "react";
 import {
+  AlignLeft,
   BellRing,
   BriefcaseBusiness,
   Check,
@@ -14,6 +16,7 @@ import {
   Save,
   ShieldCheck,
   UserRound,
+  type LucideIcon,
 } from "lucide-react";
 import { Avatar } from "../components/ui";
 import { roleDescriptions, roleLabels } from "../types";
@@ -33,6 +36,14 @@ type TextField =
   | "job_title"
   | "location"
   | "bio";
+
+type FieldShellProps = {
+  icon: LucideIcon;
+  children: ReactNode;
+  disabled?: boolean;
+  muted?: boolean;
+  multiline?: boolean;
+};
 
 const defaultPreferences: Preferences = {
   email: true,
@@ -67,16 +78,59 @@ const preferenceOptions: Array<
 ];
 
 const cardClass =
-  "rounded-[26px] border border-slate-200/80 bg-white/85 p-5 shadow-[0_20px_60px_-30px_rgba(15,55,110,0.35)] backdrop-blur-xl sm:p-6";
-
-const inputClass =
-  "!block !h-12 !w-full !max-w-none !min-w-0 !rounded-2xl !border border-slate-200 bg-white/80 px-4 !text-left text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-cyan-300 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10 disabled:cursor-not-allowed disabled:opacity-60";
-
-const textareaClass =
-  "!block !w-full !max-w-none !min-w-0 resize-none rounded-2xl border border-slate-200 bg-white/80 px-4 py-3 !text-left text-sm text-slate-900 outline-none transition placeholder:text-slate-400 hover:border-cyan-300 focus:border-cyan-500 focus:bg-white focus:ring-4 focus:ring-cyan-500/10 disabled:cursor-not-allowed disabled:opacity-60";
+  "rounded-[26px] border border-slate-200/80 bg-white/[0.9] p-4 shadow-[0_20px_60px_-30px_rgba(15,55,110,0.35)] backdrop-blur-xl sm:p-6 lg:p-7";
 
 const labelClass =
-  "flex !w-full !max-w-none !items-stretch flex-col gap-2 !text-left text-[13px] font-semibold text-slate-700";
+  "!flex !w-full !min-w-0 !max-w-none !flex-col !items-stretch !gap-2 !text-left text-[13px] font-bold text-[#274467]";
+
+const fieldInputClass =
+  "!m-0 !h-full !min-w-0 !w-full !flex-1 !border-0 !bg-transparent !p-0 !text-left !text-sm !font-semibold !text-[#10264b] !shadow-none !outline-none !ring-0 placeholder:text-slate-400 focus:!border-0 focus:!outline-none focus:!ring-0 disabled:!cursor-not-allowed disabled:!opacity-60";
+
+const fieldShellClass =
+  "!flex w-full min-w-0 !gap-3 rounded-2xl border border-slate-200 px-4 transition hover:border-cyan-300 focus-within:border-cyan-500 focus-within:ring-4 focus-within:ring-cyan-500/10";
+
+const labelStyle = {
+  display: "flex",
+  flexDirection: "column" as const,
+  alignItems: "stretch" as const,
+  gap: "8px",
+  width: "100%",
+  minWidth: 0,
+  maxWidth: "none",
+  textAlign: "left" as const,
+};
+
+function FieldShell({
+  icon: Icon,
+  children,
+  disabled = false,
+  muted = false,
+  multiline = false,
+}: FieldShellProps) {
+  return (
+    <div
+      className={[
+        fieldShellClass,
+        multiline
+          ? "!min-h-[112px] !items-start py-3"
+          : "!h-12 !items-center",
+        muted ? "!bg-slate-100/90" : "!bg-white/[0.96]",
+        disabled ? "cursor-not-allowed opacity-60" : "",
+      ].join(" ")}
+    >
+      <Icon
+        size={18}
+        aria-hidden="true"
+        className={[
+          "shrink-0 text-slate-400 transition group-focus-within:text-cyan-600",
+          multiline ? "mt-0.5" : "",
+        ].join(" ")}
+      />
+
+      {children}
+    </div>
+  );
+}
 
 export default function Profile() {
   const { user, updateProfile } = useWorkspace();
@@ -118,6 +172,7 @@ export default function Profile() {
   if (!user) return null;
 
   const roleName = roleLabels[user.role] || "Workspace member";
+
   const roleDescription =
     roleDescriptions[user.role] ||
     "A valued member of your creative workspace.";
@@ -201,43 +256,57 @@ export default function Profile() {
 
   return (
     <main
-      className="relative isolate min-h-full min-w-0 overflow-x-hidden bg-[#f4f8ff] px-3 pb-24 pt-[132px] sm:px-5 md:pb-10 md:pt-8 lg:px-8"
+      className="relative isolate min-h-screen min-w-0 overflow-x-hidden bg-[#f4f8ff] px-3 pb-24 pt-4 sm:px-5 sm:pt-6 lg:px-8 lg:pt-8"
       aria-busy={saving}
     >
-      <div className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-cyan-300/20 blur-3xl" />
-      <div className="pointer-events-none absolute -right-24 top-72 h-72 w-72 rounded-full bg-blue-400/15 blur-3xl" />
+      <div
+        className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-cyan-300/20 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div
+        className="pointer-events-none absolute -right-24 top-72 h-72 w-72 rounded-full bg-blue-400/15 blur-3xl"
+        aria-hidden="true"
+      />
 
       <div className="relative z-10 mx-auto w-full max-w-7xl">
-        <header className="mb-5 flex min-w-0 flex-col gap-4 md:flex-row md:items-end md:justify-between">
+        <header className="mb-6 flex min-w-0 flex-col gap-4 sm:mb-7 md:flex-row md:items-end md:justify-between">
           <div className="min-w-0">
-            <span className="inline-flex items-center gap-2 text-[11px] font-bold tracking-[0.2em] text-cyan-700">
-              <UserRound size={14} />
-              YOUR WORKSPACE IDENTITY
+            <span className="inline-flex items-center gap-2 text-[11px] font-black tracking-[0.2em] text-cyan-700">
+              <UserRound size={15} />
+              <span>YOUR WORKSPACE IDENTITY</span>
             </span>
 
             <h1 className="mt-2 break-words text-[clamp(2rem,8vw,3rem)] font-black leading-[1.05] tracking-[-0.05em] text-[#071a3d]">
-              Profile & preferences
+              Profile &amp; preferences
             </h1>
 
-            <p className="mt-2 max-w-xl text-sm text-slate-500">
+            <p className="mt-2 max-w-xl text-sm leading-6 text-slate-500 sm:text-base">
               Keep your details current so the right work reaches the right
               person.
             </p>
           </div>
 
-          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-white/80 px-4 py-2 text-xs font-bold text-emerald-700 shadow-sm">
+          <div className="inline-flex w-fit items-center gap-2 rounded-full border border-emerald-200 bg-white/90 px-4 py-2 text-xs font-black text-emerald-700 shadow-sm">
             <span className="h-2 w-2 rounded-full bg-emerald-400 shadow-[0_0_0_4px_rgba(52,211,153,0.15)]" />
-            Active account
+            <span>Active account</span>
           </div>
         </header>
 
-        <section className="relative mb-5 overflow-hidden rounded-[28px] border border-white/20 bg-gradient-to-br from-[#07183f] via-[#0b2e5e] to-[#07566a] px-5 py-5 text-white shadow-[0_24px_70px_-30px_rgba(5,38,91,0.65)] sm:px-7 sm:py-6">
-          <div className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full border border-cyan-200/20 bg-cyan-300/10 blur-sm" />
-          <div className="pointer-events-none absolute bottom-[-90px] right-28 h-52 w-52 rounded-full bg-cyan-300/10 blur-3xl" />
+        <section className="relative mb-5 overflow-hidden rounded-[28px] border border-white/20 bg-gradient-to-br from-[#061536] via-[#0b3264] to-[#075b69] px-5 py-6 text-white shadow-[0_24px_70px_-30px_rgba(5,38,91,0.65)] sm:px-7 sm:py-7">
+          <div
+            className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full border border-cyan-200/20 bg-cyan-300/10 blur-sm"
+            aria-hidden="true"
+          />
 
-          <div className="relative z-10 flex min-w-0 flex-col items-start gap-4 sm:flex-row sm:items-center sm:gap-5">
-            <div className="relative grid h-[70px] w-[70px] shrink-0 place-items-center rounded-[23px] bg-gradient-to-br from-cyan-300 via-emerald-300 to-blue-500 p-1 shadow-[0_12px_30px_rgba(34,211,238,0.3)]">
-              <div className="grid h-full w-full place-items-center overflow-hidden rounded-[19px] bg-[#0b2855]">
+          <div
+            className="pointer-events-none absolute bottom-[-90px] right-28 h-52 w-52 rounded-full bg-cyan-300/10 blur-3xl"
+            aria-hidden="true"
+          />
+
+          <div className="relative z-10 flex min-w-0 flex-col items-center gap-5 text-center sm:flex-row sm:items-center sm:text-left">
+            <div className="relative grid h-[78px] w-[78px] shrink-0 place-items-center rounded-[24px] bg-gradient-to-br from-cyan-300 via-emerald-300 to-blue-500 p-1 shadow-[0_12px_30px_rgba(34,211,238,0.3)]">
+              <div className="grid h-full w-full place-items-center overflow-hidden rounded-[20px] bg-[#0b2855]">
                 <Avatar name={user.name} role={user.role} />
               </div>
 
@@ -254,20 +323,23 @@ export default function Profile() {
                 {roleName.toUpperCase()} ACCESS
               </span>
 
-              <h2 className="mt-1 truncate text-2xl font-bold tracking-[-0.04em] sm:text-3xl">
+              <h2
+                className="mt-1 break-words !text-2xl font-black leading-tight tracking-[-0.04em] !text-white sm:!text-3xl"
+                style={{ color: "#ffffff" }}
+              >
                 {user.name}
               </h2>
 
-              <p className="mt-1 max-w-xl truncate text-xs text-blue-100/80">
+              <p className="mt-1 max-w-xl break-words text-xs leading-5 !text-blue-100 sm:text-sm">
                 {roleDescription}
               </p>
 
-              <div className="mt-3 flex min-w-0 flex-wrap items-center gap-2">
-                <span className="rounded-full border border-cyan-200/30 bg-white/10 px-3 py-1 text-[11px] font-bold text-cyan-50 backdrop-blur">
+              <div className="mt-3 flex min-w-0 flex-wrap items-center justify-center gap-2 sm:justify-start">
+                <span className="rounded-full border border-cyan-200/30 bg-white/10 px-3 py-1 text-[11px] font-black text-cyan-50 backdrop-blur">
                   {roleName}
                 </span>
 
-                <span className="max-w-full truncate text-[11px] text-blue-100/80">
+                <span className="max-w-full break-all text-[11px] text-blue-100/90">
                   {user.email}
                 </span>
               </div>
@@ -279,7 +351,7 @@ export default function Profile() {
           </div>
         </section>
 
-        <div className="grid gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)]">
+        <div className="grid min-w-0 gap-5 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,0.75fr)]">
           <form
             className={cardClass}
             onSubmit={submit}
@@ -291,26 +363,25 @@ export default function Profile() {
                   PERSONAL DETAILS
                 </span>
 
-                <h3 className="mt-1 text-2xl font-bold tracking-[-0.04em] text-[#071a3d]">
+                <h3 className="mt-1 text-2xl font-black tracking-[-0.04em] text-[#071a3d]">
                   About you
                 </h3>
               </div>
 
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
-                <BriefcaseBusiness size={18} />
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
+                <BriefcaseBusiness size={19} />
               </span>
             </div>
 
-            <div className="grid gap-4 md:grid-cols-2">
-              <label className={labelClass} htmlFor="profile-name">
+            <div className="grid min-w-0 gap-5 md:grid-cols-2">
+              <label
+                className={labelClass}
+                style={labelStyle}
+                htmlFor="profile-name"
+              >
                 <span>Full name</span>
 
-                <div className="relative w-full min-w-0">
-                  <UserRound
-                    size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
+                <FieldShell icon={UserRound} disabled={saving}>
                   <input
                     id="profile-name"
                     name="name"
@@ -321,40 +392,38 @@ export default function Profile() {
                     maxLength={80}
                     required
                     disabled={saving}
-                    className={`${inputClass} pl-11`}
+                    className={fieldInputClass}
                   />
-                </div>
+                </FieldShell>
               </label>
 
-              <label className={labelClass} htmlFor="profile-email">
+              <label
+                className={labelClass}
+                style={labelStyle}
+                htmlFor="profile-email"
+              >
                 <span>Work email</span>
 
-                <div className="relative w-full min-w-0">
-                  <Mail
-                    size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
+                <FieldShell icon={Mail} muted>
                   <input
                     id="profile-email"
                     name="email"
                     value={user.email}
                     readOnly
                     autoComplete="email"
-                    className={`${inputClass} bg-slate-100/80 pl-11 text-slate-500`}
+                    className={`${fieldInputClass} !text-slate-500`}
                   />
-                </div>
+                </FieldShell>
               </label>
 
-              <label className={labelClass} htmlFor="profile-phone">
+              <label
+                className={labelClass}
+                style={labelStyle}
+                htmlFor="profile-phone"
+              >
                 <span>Phone number</span>
 
-                <div className="relative w-full min-w-0">
-                  <Phone
-                    size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
+                <FieldShell icon={Phone} disabled={saving}>
                   <input
                     id="profile-phone"
                     name="phone"
@@ -365,20 +434,22 @@ export default function Profile() {
                     autoComplete="tel"
                     maxLength={20}
                     disabled={saving}
-                    className={`${inputClass} pl-11`}
+                    className={fieldInputClass}
                   />
-                </div>
+                </FieldShell>
               </label>
 
-              <label className={labelClass} htmlFor="profile-job-title">
+              <label
+                className={labelClass}
+                style={labelStyle}
+                htmlFor="profile-job-title"
+              >
                 <span>Job title</span>
 
-                <div className="relative w-full min-w-0">
-                  <BriefcaseBusiness
-                    size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
+                <FieldShell
+                  icon={BriefcaseBusiness}
+                  disabled={saving}
+                >
                   <input
                     id="profile-job-title"
                     name="job_title"
@@ -388,31 +459,36 @@ export default function Profile() {
                     autoComplete="organization-title"
                     maxLength={80}
                     disabled={saving}
-                    className={`${inputClass} pl-11`}
+                    className={fieldInputClass}
                   />
-                </div>
+                </FieldShell>
               </label>
 
-              <label className={labelClass} htmlFor="profile-department">
+              <label
+                className={labelClass}
+                style={labelStyle}
+                htmlFor="profile-department"
+              >
                 <span>Department</span>
 
-                <input
-                  id="profile-department"
-                  value={user.department || user.team_id || "Not assigned"}
-                  readOnly
-                  className={`${inputClass} bg-slate-100/80 text-slate-500`}
-                />
+                <FieldShell icon={BriefcaseBusiness} muted>
+                  <input
+                    id="profile-department"
+                    value={user.department || user.team_id || "Not assigned"}
+                    readOnly
+                    className={`${fieldInputClass} !text-slate-500`}
+                  />
+                </FieldShell>
               </label>
 
-              <label className={labelClass} htmlFor="profile-location">
+              <label
+                className={labelClass}
+                style={labelStyle}
+                htmlFor="profile-location"
+              >
                 <span>Location</span>
 
-                <div className="relative w-full min-w-0">
-                  <MapPin
-                    size={17}
-                    className="pointer-events-none absolute left-4 top-1/2 -translate-y-1/2 text-slate-400"
-                  />
-
+                <FieldShell icon={MapPin} disabled={saving}>
                   <input
                     id="profile-location"
                     name="location"
@@ -422,29 +498,36 @@ export default function Profile() {
                     autoComplete="address-level2"
                     maxLength={100}
                     disabled={saving}
-                    className={`${inputClass} pl-11`}
+                    className={fieldInputClass}
                   />
-                </div>
+                </FieldShell>
               </label>
             </div>
 
             <label
               className={`${labelClass} mt-5`}
+              style={labelStyle}
               htmlFor="profile-bio"
             >
               <span>Short bio</span>
 
-              <textarea
-                id="profile-bio"
-                name="bio"
-                value={form.bio || ""}
-                onChange={update("bio")}
-                rows={4}
-                maxLength={240}
-                placeholder="A short note about what you do best…"
+              <FieldShell
+                icon={AlignLeft}
+                multiline
                 disabled={saving}
-                className={textareaClass}
-              />
+              >
+                <textarea
+                  id="profile-bio"
+                  name="bio"
+                  value={form.bio || ""}
+                  onChange={update("bio")}
+                  rows={4}
+                  maxLength={240}
+                  placeholder="A short note about what you do best…"
+                  disabled={saving}
+                  className={`${fieldInputClass} !h-auto !min-h-[84px] !resize-none !pt-0`}
+                />
+              </FieldShell>
 
               <span className="text-right text-[11px] font-normal text-slate-400">
                 {(form.bio || "").length}/240
@@ -460,10 +543,10 @@ export default function Profile() {
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex h-12 items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#0756a5] to-[#0796b4] px-5 text-sm font-bold text-white shadow-[0_12px_24px_-10px_rgba(7,116,180,0.8)] transition hover:-translate-y-0.5 hover:shadow-[0_16px_28px_-10px_rgba(7,116,180,0.8)] disabled:cursor-not-allowed disabled:opacity-60"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#0756a5] via-[#087eb5] to-[#079fba] px-5 text-sm font-black text-white shadow-[0_12px_24px_-10px_rgba(7,116,180,0.8)] transition hover:-translate-y-0.5 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
               >
-                <Save size={16} />
-                {saving ? "Saving…" : "Save changes"}
+                <Save size={17} />
+                <span>{saving ? "Saving…" : "Save changes"}</span>
               </button>
             </div>
 
@@ -486,7 +569,7 @@ export default function Profile() {
             )}
           </form>
 
-          <aside className="space-y-5">
+          <aside className="min-w-0 space-y-5">
             <section className={cardClass}>
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div>
@@ -494,45 +577,49 @@ export default function Profile() {
                     ACCOUNT DETAILS
                   </span>
 
-                  <h3 className="mt-1 text-2xl font-bold tracking-[-0.04em] text-[#071a3d]">
+                  <h3 className="mt-1 text-2xl font-black tracking-[-0.04em] text-[#071a3d]">
                     Your access
                   </h3>
                 </div>
 
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
-                  <ShieldCheck size={18} />
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
+                  <ShieldCheck size={19} />
                 </span>
               </div>
 
               <dl className="divide-y divide-slate-100">
-                <div className="flex items-center justify-between gap-4 py-3 first:pt-0">
-                  <dt className="text-sm text-slate-500">Role</dt>
-                  <dd className="text-right text-sm font-bold text-slate-800">
+                <div className="flex items-start justify-between gap-4 py-3 first:pt-0 sm:items-center">
+                  <dt className="shrink-0 text-sm text-slate-500">Role</dt>
+
+                  <dd className="break-words text-right text-sm font-black text-slate-800">
                     {roleName}
                   </dd>
                 </div>
 
-                <div className="flex items-center justify-between gap-4 py-3">
-                  <dt className="text-sm text-slate-500">
+                <div className="flex items-start justify-between gap-4 py-3 sm:items-center">
+                  <dt className="shrink-0 text-sm text-slate-500">
                     Reporting line
                   </dt>
-                  <dd className="max-w-[170px] truncate text-right text-sm font-bold text-slate-800">
+
+                  <dd className="max-w-[62%] break-words text-right text-sm font-black text-slate-800">
                     {user.reports_to || "Workspace leadership"}
                   </dd>
                 </div>
 
-                <div className="flex items-center justify-between gap-4 py-3">
-                  <dt className="text-sm text-slate-500">Joined</dt>
-                  <dd className="text-right text-sm font-bold text-slate-800">
+                <div className="flex items-start justify-between gap-4 py-3 sm:items-center">
+                  <dt className="shrink-0 text-sm text-slate-500">Joined</dt>
+
+                  <dd className="break-words text-right text-sm font-black text-slate-800">
                     {user.joined_at || "Not recorded"}
                   </dd>
                 </div>
 
                 <div className="flex items-center justify-between gap-4 py-3 last:pb-0">
                   <dt className="text-sm text-slate-500">Account</dt>
-                  <dd className="inline-flex items-center gap-2 text-sm font-bold text-emerald-600">
+
+                  <dd className="inline-flex items-center gap-2 text-sm font-black text-emerald-600">
                     <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    Active
+                    <span>Active</span>
                   </dd>
                 </div>
               </dl>
@@ -545,13 +632,13 @@ export default function Profile() {
                     NOTIFICATIONS
                   </span>
 
-                  <h3 className="mt-1 text-2xl font-bold tracking-[-0.04em] text-[#071a3d]">
+                  <h3 className="mt-1 text-2xl font-black tracking-[-0.04em] text-[#071a3d]">
                     Stay in the loop
                   </h3>
                 </div>
 
-                <span className="grid h-10 w-10 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
-                  <BellRing size={18} />
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
+                  <BellRing size={19} />
                 </span>
               </div>
 
@@ -564,13 +651,16 @@ export default function Profile() {
                   <label
                     key={key}
                     className={`flex items-center justify-between gap-4 py-4 first:pt-0 last:pb-0 ${
-                      saving ? "cursor-not-allowed opacity-60" : "cursor-pointer"
+                      saving
+                        ? "cursor-not-allowed opacity-60"
+                        : "cursor-pointer"
                     }`}
                   >
                     <span className="min-w-0">
-                      <strong className="block text-sm text-slate-800">
+                      <strong className="block text-sm font-black text-slate-800">
                         {label}
                       </strong>
+
                       <small className="mt-1 block text-xs leading-5 text-slate-500">
                         {note}
                       </small>
@@ -596,16 +686,16 @@ export default function Profile() {
             </section>
 
             <section className={`${cardClass} flex items-center gap-4`}>
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20">
-                <MapPin size={19} />
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20">
+                <MapPin size={20} />
               </span>
 
               <div className="min-w-0">
-                <strong className="block text-sm text-slate-800">
+                <strong className="block text-sm font-black text-slate-800">
                   Workspace location
                 </strong>
 
-                <p className="mt-1 truncate text-sm text-slate-500">
+                <p className="mt-1 break-words text-sm text-slate-500">
                   {form.location || "Set your location above"}
                 </p>
               </div>
