@@ -118,7 +118,7 @@ export default function RoleDashboard() {
           <h1>{copy.title}</h1>
           <p className="role-hero-description">{copy.description}</p>
           <div className="role-hero-actions">
-            <Link className="btn" to={user.role === "employee" ? "/my-tasks" : "/projects"}>{user.role === "employee" ? "Open my work" : "View delivery"}<ArrowRight size={16} /></Link>
+            <Link className="btn" to={user.role === "employee" ? "/my-tasks" : "/projects"}>{user.role === "employee" ? "Open my work" : "View projects"}<ArrowRight size={16} /></Link>
             {canManagePeople && <Link className="btn secondary" to="/people"><Users size={16} /> Manage people</Link>}
             {!canManagePeople && <Link className="btn secondary" to="/profile"><ShieldCheck size={16} /> Open my profile</Link>}
           </div>
