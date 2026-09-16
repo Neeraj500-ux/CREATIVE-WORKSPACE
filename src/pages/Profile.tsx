@@ -15,6 +15,7 @@ import {
   Phone,
   Save,
   ShieldCheck,
+  Sparkles,
   UserRound,
   type LucideIcon,
 } from "lucide-react";
@@ -78,7 +79,7 @@ const preferenceOptions: Array<
 ];
 
 const cardClass =
-  "rounded-[26px] border border-slate-200/80 bg-white/[0.9] p-4 shadow-[0_20px_60px_-30px_rgba(15,55,110,0.35)] backdrop-blur-xl sm:p-6 lg:p-7";
+  "rounded-[28px] border border-slate-200/70 bg-white/[0.85] p-4 shadow-[0_24px_70px_-32px_rgba(11,44,90,0.45)] backdrop-blur-2xl transition-shadow duration-300 hover:shadow-[0_28px_80px_-28px_rgba(11,44,90,0.5)] sm:p-6 lg:p-7";
 
 const labelClass =
   "!flex !w-full !min-w-0 !max-w-none !flex-col !items-stretch !gap-2 !text-left text-[13px] font-bold text-[#274467]";
@@ -87,7 +88,7 @@ const fieldInputClass =
   "!m-0 !h-full !min-w-0 !w-full !flex-1 !border-0 !bg-transparent !p-0 !text-left !text-sm !font-semibold !text-[#10264b] !shadow-none !outline-none !ring-0 placeholder:text-slate-400 focus:!border-0 focus:!outline-none focus:!ring-0 disabled:!cursor-not-allowed disabled:!opacity-60";
 
 const fieldShellClass =
-  "!flex w-full min-w-0 !gap-3 rounded-2xl border border-slate-200 px-4 transition hover:border-cyan-300 focus-within:border-cyan-500 focus-within:ring-4 focus-within:ring-cyan-500/10";
+  "group !flex w-full min-w-0 !gap-3 rounded-2xl border border-slate-200 bg-white px-4 transition-all duration-200 hover:border-cyan-300 hover:shadow-[0_6px_20px_-12px_rgba(8,126,181,0.35)] focus-within:border-cyan-500 focus-within:ring-4 focus-within:ring-cyan-500/10";
 
 const labelStyle = {
   display: "flex",
@@ -114,7 +115,7 @@ function FieldShell({
         multiline
           ? "!min-h-[112px] !items-start py-3"
           : "!h-12 !items-center",
-        muted ? "!bg-slate-100/90" : "!bg-white/[0.96]",
+        muted ? "!bg-slate-100/90" : "!bg-white/[0.98]",
         disabled ? "cursor-not-allowed opacity-60" : "",
       ].join(" ")}
     >
@@ -122,7 +123,7 @@ function FieldShell({
         size={18}
         aria-hidden="true"
         className={[
-          "shrink-0 text-slate-400 transition group-focus-within:text-cyan-600",
+          "shrink-0 text-slate-400 transition-colors duration-200 group-focus-within:text-cyan-600",
           multiline ? "mt-0.5" : "",
         ].join(" ")}
       />
@@ -151,6 +152,13 @@ export default function Profile() {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [saving, setSaving] = useState(false);
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    // Single orchestrated entrance — runs once on mount, not per-section.
+    const frame = requestAnimationFrame(() => setMounted(true));
+    return () => cancelAnimationFrame(frame);
+  }, []);
 
   useEffect(() => {
     if (!user) return;
@@ -259,6 +267,7 @@ export default function Profile() {
       className="relative isolate min-h-screen min-w-0 overflow-x-hidden bg-[#f4f8ff] px-3 pb-24 pt-4 sm:px-5 sm:pt-6 lg:px-8 lg:pt-8"
       aria-busy={saving}
     >
+      {/* Ambient background glow — premium depth, no motion */}
       <div
         className="pointer-events-none absolute -left-24 top-10 h-64 w-64 rounded-full bg-cyan-300/20 blur-3xl"
         aria-hidden="true"
@@ -269,15 +278,25 @@ export default function Profile() {
         aria-hidden="true"
       />
 
-      <div className="relative z-10 mx-auto w-full max-w-7xl">
+      <div
+        className="pointer-events-none absolute left-1/2 top-[420px] h-56 w-[420px] -translate-x-1/2 rounded-full bg-emerald-300/10 blur-3xl"
+        aria-hidden="true"
+      />
+
+      <div
+        className={[
+          "relative z-10 mx-auto w-full max-w-7xl transition-all duration-700 ease-out",
+          mounted ? "translate-y-0 opacity-100" : "translate-y-3 opacity-0",
+        ].join(" ")}
+      >
         <header className="mb-6 flex min-w-0 flex-col gap-4 sm:mb-7 md:flex-row md:items-end md:justify-between">
           <div className="min-w-0">
             <span className="inline-flex items-center gap-2 text-[11px] font-black tracking-[0.2em] text-cyan-700">
               <UserRound size={15} />
-              <span>YOUR WORKSPACE IDENTITY</span>
+              <span>Your workspace identity</span>
             </span>
 
-            <h1 className="mt-2 break-words text-[clamp(2rem,8vw,3rem)] font-black leading-[1.05] tracking-[-0.05em] text-[#071a3d]">
+            <h1 className="mt-2 break-words text-[clamp(2rem,8vw,3.1rem)] font-black leading-[1.05] tracking-[-0.05em] text-[#071a3d]">
               Profile &amp; preferences
             </h1>
 
@@ -293,60 +312,78 @@ export default function Profile() {
           </div>
         </header>
 
-        <section className="relative mb-5 overflow-hidden rounded-[28px] border border-white/20 bg-gradient-to-br from-[#061536] via-[#0b3264] to-[#075b69] px-5 py-6 text-white shadow-[0_24px_70px_-30px_rgba(5,38,91,0.65)] sm:px-7 sm:py-7">
+        {/* Identity hero — the one bold, memorable moment on the page */}
+        <section className="relative mb-5 overflow-hidden rounded-[32px] border border-white/10 bg-gradient-to-br from-[#04102b] via-[#0b3264] to-[#075b69] px-5 py-7 text-white shadow-[0_30px_90px_-30px_rgba(5,38,91,0.7)] sm:px-8 sm:py-9">
+          {/* Fine grain texture for a less "flat gradient card" feel */}
           <div
-            className="pointer-events-none absolute -right-10 -top-16 h-48 w-48 rounded-full border border-cyan-200/20 bg-cyan-300/10 blur-sm"
+            className="pointer-events-none absolute inset-0 opacity-[0.05] mix-blend-overlay"
+            aria-hidden="true"
+            style={{
+              backgroundImage:
+                "radial-gradient(rgba(255,255,255,0.9) 0.6px, transparent 0.6px)",
+              backgroundSize: "14px 14px",
+            }}
+          />
+
+          <div
+            className="pointer-events-none absolute -right-16 -top-20 h-56 w-56 rounded-full border border-cyan-200/20 bg-cyan-300/10 blur-sm"
             aria-hidden="true"
           />
 
           <div
-            className="pointer-events-none absolute bottom-[-90px] right-28 h-52 w-52 rounded-full bg-cyan-300/10 blur-3xl"
+            className="pointer-events-none absolute bottom-[-100px] right-24 h-60 w-60 rounded-full bg-cyan-300/10 blur-3xl"
+            aria-hidden="true"
+          />
+
+          <div
+            className="pointer-events-none absolute -left-10 bottom-[-60px] h-44 w-44 rounded-full bg-emerald-300/10 blur-3xl"
             aria-hidden="true"
           />
 
           <div className="relative z-10 flex min-w-0 flex-col items-center gap-5 text-center sm:flex-row sm:items-center sm:text-left">
-            <div className="relative grid h-[78px] w-[78px] shrink-0 place-items-center rounded-[24px] bg-gradient-to-br from-cyan-300 via-emerald-300 to-blue-500 p-1 shadow-[0_12px_30px_rgba(34,211,238,0.3)]">
-              <div className="grid h-full w-full place-items-center overflow-hidden rounded-[20px] bg-[#0b2855]">
+            <div className="relative grid h-[84px] w-[84px] shrink-0 place-items-center rounded-[26px] bg-gradient-to-br from-cyan-300 via-emerald-300 to-blue-500 p-[3px] shadow-[0_16px_36px_rgba(34,211,238,0.35)]">
+              <div className="grid h-full w-full place-items-center overflow-hidden rounded-[22px] bg-[#0b2855]">
                 <Avatar name={user.name} role={user.role} />
               </div>
 
               <span
-                className="absolute -bottom-1 -right-1 grid h-5 w-5 place-items-center rounded-full border-[3px] border-[#0b315c] bg-emerald-400 text-[#06233f]"
+                className="absolute -bottom-1.5 -right-1.5 grid h-6 w-6 place-items-center rounded-full border-[3px] border-[#0b315c] bg-emerald-400 text-[#06233f] shadow-[0_2px_8px_rgba(0,0,0,0.25)]"
                 aria-label="Verified active account"
               >
-                <Check size={11} strokeWidth={3} />
+                <Check size={12} strokeWidth={3.25} />
               </span>
             </div>
 
             <div className="min-w-0 flex-1">
-              <span className="text-[10px] font-black tracking-[0.2em] text-cyan-200">
-                {roleName.toUpperCase()} ACCESS
+              <span className="inline-flex items-center gap-1.5 text-[10px] font-black tracking-[0.2em] text-cyan-200">
+                <Sparkles size={12} className="shrink-0" />
+                {roleName} access
               </span>
 
               <h2
-                className="mt-1 break-words !text-2xl font-black leading-tight tracking-[-0.04em] !text-white sm:!text-3xl"
+                className="mt-1 break-words !text-2xl font-black leading-tight tracking-[-0.04em] !text-white sm:!text-[2.15rem]"
                 style={{ color: "#ffffff" }}
               >
                 {user.name}
               </h2>
 
-              <p className="mt-1 max-w-xl break-words text-xs leading-5 !text-blue-100 sm:text-sm">
+              <p className="mt-1.5 max-w-xl break-words text-xs leading-5 !text-blue-100/90 sm:text-sm">
                 {roleDescription}
               </p>
 
-              <div className="mt-3 flex min-w-0 flex-wrap items-center justify-center gap-2 sm:justify-start">
+              <div className="mt-3.5 flex min-w-0 flex-wrap items-center justify-center gap-2 sm:justify-start">
                 <span className="rounded-full border border-cyan-200/30 bg-white/10 px-3 py-1 text-[11px] font-black text-cyan-50 backdrop-blur">
                   {roleName}
                 </span>
 
-                <span className="max-w-full break-all text-[11px] text-blue-100/90">
+                <span className="max-w-full break-all text-[11px] text-blue-100/80">
                   {user.email}
                 </span>
               </div>
             </div>
 
-            <div className="hidden shrink-0 text-cyan-200/30 sm:block">
-              <ShieldCheck size={64} strokeWidth={1} />
+            <div className="hidden shrink-0 text-cyan-200/25 sm:block">
+              <ShieldCheck size={68} strokeWidth={1} />
             </div>
           </div>
         </section>
@@ -360,7 +397,7 @@ export default function Profile() {
             <div className="mb-6 flex items-start justify-between gap-4">
               <div>
                 <span className="text-[11px] font-black tracking-[0.2em] text-cyan-700">
-                  PERSONAL DETAILS
+                  Personal details
                 </span>
 
                 <h3 className="mt-1 text-2xl font-black tracking-[-0.04em] text-[#071a3d]">
@@ -368,12 +405,12 @@ export default function Profile() {
                 </h3>
               </div>
 
-              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
+              <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-blue-50 text-cyan-700">
                 <BriefcaseBusiness size={19} />
               </span>
             </div>
 
-            <div className="grid min-w-0 gap-5 md:grid-cols-2">
+            <div className="grid min-w-0 gap-5 sm:grid-cols-2">
               <label
                 className={labelClass}
                 style={labelStyle}
@@ -543,7 +580,7 @@ export default function Profile() {
               <button
                 type="submit"
                 disabled={saving}
-                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#0756a5] via-[#087eb5] to-[#079fba] px-5 text-sm font-black text-white shadow-[0_12px_24px_-10px_rgba(7,116,180,0.8)] transition hover:-translate-y-0.5 hover:brightness-110 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
+                className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-[#0756a5] via-[#087eb5] to-[#079fba] px-5 text-sm font-black text-white shadow-[0_14px_28px_-10px_rgba(7,116,180,0.85)] transition-all duration-200 hover:-translate-y-0.5 hover:shadow-[0_18px_34px_-10px_rgba(7,116,180,0.95)] hover:brightness-110 active:translate-y-0 disabled:cursor-not-allowed disabled:opacity-60 sm:w-auto"
               >
                 <Save size={17} />
                 <span>{saving ? "Saving…" : "Save changes"}</span>
@@ -574,7 +611,7 @@ export default function Profile() {
               <div className="mb-5 flex items-start justify-between gap-4">
                 <div>
                   <span className="text-[11px] font-black tracking-[0.2em] text-cyan-700">
-                    ACCOUNT DETAILS
+                    Account details
                   </span>
 
                   <h3 className="mt-1 text-2xl font-black tracking-[-0.04em] text-[#071a3d]">
@@ -582,7 +619,7 @@ export default function Profile() {
                   </h3>
                 </div>
 
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-blue-50 text-cyan-700">
                   <ShieldCheck size={19} />
                 </span>
               </div>
@@ -629,7 +666,7 @@ export default function Profile() {
               <div className="mb-4 flex items-start justify-between gap-4">
                 <div>
                   <span className="text-[11px] font-black tracking-[0.2em] text-cyan-700">
-                    NOTIFICATIONS
+                    Notifications
                   </span>
 
                   <h3 className="mt-1 text-2xl font-black tracking-[-0.04em] text-[#071a3d]">
@@ -637,7 +674,7 @@ export default function Profile() {
                   </h3>
                 </div>
 
-                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-cyan-50 text-cyan-700">
+                <span className="grid h-11 w-11 shrink-0 place-items-center rounded-2xl border border-cyan-100 bg-gradient-to-br from-cyan-50 to-blue-50 text-cyan-700">
                   <BellRing size={19} />
                 </span>
               </div>
@@ -676,9 +713,9 @@ export default function Profile() {
                         className="peer sr-only"
                       />
 
-                      <span className="absolute inset-0 rounded-full bg-slate-200 transition peer-checked:bg-cyan-500 peer-focus-visible:ring-4 peer-focus-visible:ring-cyan-500/20" />
+                      <span className="absolute inset-0 rounded-full bg-slate-200 transition-colors duration-200 peer-checked:bg-gradient-to-r peer-checked:from-cyan-500 peer-checked:to-blue-500 peer-focus-visible:ring-4 peer-focus-visible:ring-cyan-500/20" />
 
-                      <span className="absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow-sm transition peer-checked:translate-x-5" />
+                      <span className="absolute left-1 top-1 h-4 w-4 rounded-full bg-white shadow-sm transition-transform duration-200 peer-checked:translate-x-5" />
                     </span>
                   </label>
                 ))}
@@ -686,7 +723,7 @@ export default function Profile() {
             </section>
 
             <section className={`${cardClass} flex items-center gap-4`}>
-              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/20">
+              <span className="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-gradient-to-br from-cyan-500 to-blue-600 text-white shadow-lg shadow-cyan-500/25">
                 <MapPin size={20} />
               </span>
 
