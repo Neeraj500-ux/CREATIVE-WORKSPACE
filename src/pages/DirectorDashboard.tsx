@@ -565,7 +565,7 @@ export default function DirectorDashboard() {
         <div>
           <span className="eyebrow"><Command size={14} /> DIRECTOR COMMAND CENTER</span>
           <div className="director-title-line"><h1>Everything is moving.</h1><span className="director-live-pill"><i /> Live workspace</span></div>
-          <p>One ClickUp-style view for people, projects, tasks, goals and the decisions shaping Creative Adhyayan.</p>
+          <p>One ClickUp-style view for people, projects, tasks, goals and the decisions shaping creative-crew.</p>
         </div>
         <div className="director-header-actions">
           <Button className="secondary" onClick={() => setComposer({ kind: "project" })}><FolderKanban size={16} /> New project</Button>

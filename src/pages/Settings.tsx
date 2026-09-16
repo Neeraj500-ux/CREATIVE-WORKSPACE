@@ -21,7 +21,7 @@ function passwordError(cause: unknown): string {
 export default function Settings() {
   const { user, data, save } = useWorkspace();
   const existing = (data.settings || [])[0];
-  const [name, setName] = useState(existing?.name || "Creative Adhyayan");
+  const [name, setName] = useState(existing?.name || "creative-crew");
   const [description, setDescription] = useState(existing?.description || "One Platform. Every Skill You Need.");
   const [password, setPassword] = useState("");
   const [confirm, setConfirm] = useState("");
@@ -91,7 +91,7 @@ export default function Settings() {
             <label>Confirm password<input type="password" minLength={10} autoComplete="new-password" value={confirm} onChange={(event) => setConfirm(event.target.value)} placeholder="Repeat your password" required /></label>
             <Button className="secondary" disabled={saving}><KeyRound size={16} /> Update password</Button>
           </form>
-          <p className="settings-help"><Mail size={14} /> Need help? <a href="mailto:Contact@creativeadhyayan.com">Contact Creative Adhyayan</a></p>
+          <p className="settings-help"><Mail size={14} /> Need help? <a href="mailto:Contact@creativeadhyayan.com">Contact creative-crew</a></p>
         </section>
       </div>
     </div>

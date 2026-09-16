@@ -169,7 +169,7 @@ export default function AppShell() {
     return (
       <div className="loading" role="status">
         <span className="loading-mark"><span /></span>
-        <strong>Creative Adhyayan</strong>
+        <strong>creative-crew</strong>
         <p>Opening your workspace…</p>
       </div>
     );
@@ -212,7 +212,7 @@ export default function AppShell() {
         <button className="ca-mobile-close icon-btn" aria-label="Close navigation" onClick={() => setMobile(false)}><X size={20} /></button>
         <Link className="brand" to={dashboardPath[user.role]} onClick={() => setMobile(false)}>
           <span className="brand-icon"><Layers size={23} /></span>
-          {(!collapsed || mobile) && <div><strong>Creative Adhyayan</strong><small>{roleLabels[user.role].toUpperCase()} WORKSPACE</small></div>}
+          {(!collapsed || mobile) && <div><strong>creative-crew</strong><small>{roleLabels[user.role].toUpperCase()} WORKSPACE</small></div>}
         </Link>
 
         <div className="workspace-switch">
@@ -281,7 +281,7 @@ export default function AppShell() {
           {error && <div className="global-error" role="alert">{error}</div>}
           <Outlet />
         </main>
-        <footer><strong>Creative Adhyayan</strong><span>Built for focused teams. Designed for meaningful work.</span><span>© {new Date().getFullYear()}</span></footer>
+        <footer><strong>creative-crew</strong><span>Built for focused teams. Designed for meaningful work.</span><span>© {new Date().getFullYear()}</span></footer>
       </div>
 
       {create && <Editor table={create} onClose={() => setCreate("")} />}

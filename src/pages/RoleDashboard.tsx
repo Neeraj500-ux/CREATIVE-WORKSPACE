@@ -26,7 +26,7 @@ const roleCopy: Record<Role, { eyebrow: string; title: string; description: stri
   director: {
     eyebrow: "DIRECTOR COMMAND CENTER",
     title: "See the whole picture. Set the pace.",
-    description: "Organization-wide clarity for people, delivery, finance and the decisions that move Creative Adhyayan forward.",
+    description: "Organization-wide clarity for people, delivery, finance and the decisions that move creative-crew forward.",
   },
   manager: {
     eyebrow: "MANAGER DELIVERY DESK",

@@ -1,4 +1,4 @@
-CREATIVE ADHYAYAN WORKSPACE
+creative-crew WORKSPACE
 
 Open this folder in VS Code. In the terminal run:
 

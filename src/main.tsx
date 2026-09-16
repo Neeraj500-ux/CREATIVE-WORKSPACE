@@ -38,7 +38,7 @@ function LoadingScreen({ label = "Preparing your workspace…" }: { label?: stri
   return (
     <div className="loading" role="status" aria-live="polite">
       <span className="loading-mark"><span /></span>
-      <strong>Creative Adhyayan</strong>
+      <strong>creative-crew</strong>
       <p>{label}</p>
     </div>
   );

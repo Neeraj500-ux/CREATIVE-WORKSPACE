@@ -102,7 +102,7 @@ export function seed(): Record<string, Entity[]> {
     "Wellness Brand Refresh",
     "Cricket Academy Website",
     "Festive E-commerce Campaign",
-    "Creative Adhyayan Admissions",
+    "creative-crew Admissions",
     "SEO Growth Sprint",
   ];
   const taskNames = [
@@ -196,7 +196,7 @@ export function seed(): Record<string, Entity[]> {
       },
       {
         id: "g1",
-        name: "Creative Adhyayan growth",
+        name: "creative-crew growth",
         status: "In progress",
         progress: 54,
         description: "Ship the next admissions and content campaigns on time.",
@@ -217,7 +217,7 @@ export function seed(): Record<string, Entity[]> {
     notifications: [
       {
         id: "n0",
-        name: "Welcome to your Creative Adhyayan workspace",
+        name: "Welcome to your creative-crew workspace",
         status: "Unread",
         description:
           "Explore the sample campaign, assign work and review your team capacity.",
@@ -248,7 +248,7 @@ export function seed(): Record<string, Entity[]> {
         name: "One Platform. Every Skill You Need.",
         status: "Published",
         description:
-          "Creative Adhyayan offers practical, industry-focused training in Graphic Design, Web Development, Digital Marketing, AI Tools and Video Editing. Online and offline learning are available.",
+          "creative-crew offers practical, industry-focused training in Graphic Design, Web Development, Digital Marketing, AI Tools and Video Editing. Online and offline learning are available.",
       },
     ],
     files: [],

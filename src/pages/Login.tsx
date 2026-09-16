@@ -123,7 +123,7 @@ export default function Login() {
       <div className="auth-grid" aria-hidden="true" />
       <div className="auth-shell">
         <section className="auth-story">
-          <div className="auth-brand"><span className="auth-brand-icon"><Layers size={23} /></span><div><strong>Creative Adhyayan</strong><small>CREATIVE WORKSPACE</small></div></div>
+          <div className="auth-brand"><span className="auth-brand-icon"><Layers size={23} /></span><div><strong>creative-crew</strong><small>CREATIVE WORKSPACE</small></div></div>
           <div className="auth-story-copy">
             <span className="auth-pill"><Sparkles size={13} /> PLAN · CREATE · GROW</span>
             <h1>Where great work finds its <em>flow.</em></h1>
@@ -156,7 +156,7 @@ export default function Login() {
             <p className="auth-trust"><ShieldCheck size={14} /> Your identity is protected by Firebase Authentication.</p>
             <p className="auth-help">Need an account? Contact your workspace administrator.</p>
           </div>
-          <footer className="auth-footer">© {new Date().getFullYear()} Creative Adhyayan <span>Built for focused teams.</span></footer>
+          <footer className="auth-footer">© {new Date().getFullYear()} creative-crew <span>Built for focused teams.</span></footer>
         </section>
       </div>
     </main>
