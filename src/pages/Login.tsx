@@ -175,7 +175,7 @@ export default function Login() {
   }
 
   return (
-    <main className="fb-login" aria-busy={checking}>
+    <main className="fb-login" aria-busy={checking || busy !== null}>
       <style>{styles}</style>
 
       <div className="fb-background-orb fb-orb-one" aria-hidden="true" />
@@ -1531,6 +1531,232 @@ const styles = `
 
   .fb-spin {
     animation: fb-spin 1.5s linear infinite !important;
+  }
+}
+
+/* Premium borderless finish */
+.fb-shell {
+  border: 0;
+  background: rgba(255, 255, 255, .72);
+  box-shadow:
+    0 42px 110px rgba(30, 64, 175, .14),
+    0 16px 36px rgba(23, 38, 66, .08),
+    inset 0 1px 0 rgba(255, 255, 255, .92);
+}
+
+.fb-shell::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  top: 0;
+  left: -35%;
+  width: 24%;
+  height: 1px;
+  pointer-events: none;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .95), transparent);
+  filter: blur(.4px);
+  animation: fb-shell-shine 9s ease-in-out infinite;
+}
+
+.fb-login::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  opacity: .32;
+  background-image:
+    linear-gradient(rgba(37, 99, 235, .035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(37, 99, 235, .035) 1px, transparent 1px);
+  background-size: 46px 46px;
+  mask-image: linear-gradient(to bottom, #000, transparent 78%);
+}
+
+.fb-brand-icon,
+.fb-pill,
+.fb-preview,
+.fb-task,
+.fb-task-icon,
+.fb-task-tag,
+.fb-welcome-icon,
+.fb-form-badge,
+.fb-google,
+.fb-submit,
+.fb-input,
+.fb-message {
+  border: 0 !important;
+}
+
+.fb-brand-icon {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .34),
+    0 10px 24px rgba(16, 40, 85, .14);
+}
+
+.fb-pill,
+.fb-form-badge {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .42), 0 8px 20px rgba(37, 99, 235, .06);
+}
+
+.fb-preview {
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .25),
+    0 24px 52px rgba(16, 44, 108, .24);
+}
+
+.fb-task {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .08);
+}
+
+.fb-task-icon {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .16), 0 7px 16px rgba(16, 44, 108, .12);
+}
+
+.fb-panel {
+  background:
+    radial-gradient(circle at 92% 4%, rgba(219, 234, 254, .82), transparent 34%),
+    linear-gradient(160deg, rgba(255, 255, 255, .98), rgba(248, 251, 255, .96));
+}
+
+.fb-security {
+  width: max-content;
+  max-width: 100%;
+  padding: 8px 11px;
+  border-radius: 999px;
+  background: rgba(239, 246, 255, .74);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .94), 0 8px 20px rgba(37, 99, 235, .055);
+}
+
+.fb-welcome-icon {
+  background: linear-gradient(145deg, #ffffff, #e8f1ff 70%, #dbeafe);
+  box-shadow:
+    inset 0 2px 0 rgba(255, 255, 255, .94),
+    0 14px 28px rgba(37, 99, 235, .13);
+}
+
+.fb-message {
+  box-shadow: 0 10px 22px rgba(23, 38, 66, .045);
+}
+
+.fb-error {
+  box-shadow: inset 3px 0 0 #fb7185, 0 10px 22px rgba(190, 18, 60, .06);
+}
+
+.fb-success {
+  box-shadow: inset 3px 0 0 #4ade80, 0 10px 22px rgba(21, 128, 61, .06);
+}
+
+.fb-google {
+  min-height: 58px;
+  background: rgba(255, 255, 255, .88);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .98),
+    0 12px 28px rgba(23, 38, 66, .075);
+}
+
+.fb-google:active:not(:disabled),
+.fb-submit:active:not(:disabled) {
+  transform: translateY(1px) scale(.995);
+}
+
+.fb-input {
+  min-height: 58px;
+  background: linear-gradient(145deg, rgba(246, 249, 255, .98), rgba(239, 245, 255, .92));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, .96),
+    0 12px 26px rgba(23, 38, 66, .055);
+}
+
+.fb-input:focus-within {
+  border: 0 !important;
+  transform: translateY(-1px);
+  background: #ffffff;
+  box-shadow:
+    0 0 0 4px rgba(37, 99, 235, .095),
+    0 16px 32px rgba(37, 99, 235, .12),
+    inset 0 1px 0 rgba(255, 255, 255, .98);
+}
+
+.fb-input input,
+.fb-input input:focus,
+.fb-input input:active {
+  border: 0 !important;
+  outline: 0 !important;
+  box-shadow: none !important;
+  appearance: none;
+}
+
+.fb-input input:-webkit-autofill,
+.fb-input input:-webkit-autofill:hover,
+.fb-input input:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px transparent inset !important;
+}
+
+.fb-toggle {
+  border: 0 !important;
+  border-radius: 12px;
+}
+
+.fb-submit {
+  min-height: 58px;
+  box-shadow:
+    0 15px 30px rgba(37, 99, 235, .24),
+    inset 0 1px 0 rgba(255, 255, 255, .32);
+}
+
+.fb-help,
+.fb-footer {
+  border-top: 0;
+}
+
+.fb-help {
+  padding-top: 0;
+}
+
+.fb-footer {
+  padding-top: 12px;
+}
+
+@keyframes fb-shell-shine {
+  0%, 30% { transform: translateX(0); opacity: 0; }
+  45% { opacity: 1; }
+  70%, 100% { transform: translateX(620%); opacity: 0; }
+}
+
+@media (max-width: 900px) {
+  .fb-security {
+    margin-inline: auto;
+  }
+
+  .fb-form-content {
+    padding-top: 24px;
+  }
+}
+
+@media (max-width: 540px) {
+  .fb-login {
+    padding: 8px;
+  }
+
+  .fb-shell {
+    box-shadow:
+      0 24px 60px rgba(30, 64, 175, .13),
+      0 10px 25px rgba(23, 38, 66, .07),
+      inset 0 1px 0 rgba(255, 255, 255, .92);
+  }
+
+  .fb-panel {
+    padding-top: 21px;
+  }
+
+  .fb-security {
+    font-size: 9px;
+  }
+
+  .fb-input,
+  .fb-google,
+  .fb-submit {
+    min-height: 56px;
   }
 }
 `;
